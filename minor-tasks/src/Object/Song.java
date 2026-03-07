@@ -19,5 +19,10 @@ public class Song {
         Song song = (Song) otherObject;
         return Objects.equals(title, song.title) && Objects.equals(artist, song.artist) && Objects.equals(songwriter, song.songwriter);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, artist, songwriter);
+    }
 }
 
