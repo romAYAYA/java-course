@@ -4,6 +4,7 @@ import models.Task;
 
 import java.util.List;
 
-public interface TaskManager extends TaskOperations, EpicOperations, SubtaskOperations {
+public interface HistoryManager {
+    void add(Task task);
     List<Task> getHistory();
 }
