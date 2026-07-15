@@ -3,6 +3,7 @@ package recursion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DivideAndConquer {
     void main() {
@@ -10,7 +11,7 @@ public class DivideAndConquer {
         System.out.println(countElements(List.of(3, 4, 5, 6, 7)));
         System.out.println(findMax(List.of(3, 7, 4, 5, 6)));
         System.out.println(binarySearch(23, List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 23, 40)));
-        System.out.println(quckSort(List.of(3, 6, 2, 8, 1, 4)));
+        System.out.println(quickSort(List.of(3, 6, 2, 8, 1, 4)));
     }
 
     public static int sum(List<Integer> arr) {
@@ -49,34 +50,52 @@ public class DivideAndConquer {
         }
     }
 
-    public static List<Integer> quckSort(List<Integer> arr) {
+    public static List<Integer> quickSort(List<Integer> arr) {
         if (arr.size() < 2) return arr;
 
         else {
-            int pivot = arr.getFirst();
-            List<Integer> rest = arr.subList(1, arr.size());
+            List<Integer> mutable = new ArrayList<>(arr);
+            int pivotIdx = ThreadLocalRandom.current().nextInt(mutable.size());
+            int pivot = mutable.remove(pivotIdx);
 
-            List<Integer> less = rest
-                    .stream()
-                    .filter(i -> i <= pivot)
-                    .toList();
-            List<Integer> greater = rest
-                    .stream()
-                    .filter(i -> i > pivot)
-                    .toList();
+            List<Integer> less = mutable.stream().filter(i->i<=pivot).toList();
+            List<Integer> greater = mutable.stream().filter(i->i>pivot).toList();
 
-//            List<Integer> less = new ArrayList<>();
-//            List<Integer> greater = new ArrayList<>();
-//
-//            for (int i : rest) {
-//                if (i <= pivot) less.add(i);
-//                else greater.add(i);
-//            }
-
-            List<Integer> result = new ArrayList<>(quckSort(less));
+            List<Integer> result = new ArrayList<>(quickSort(less));
             result.add(pivot);
-            result.addAll(quckSort(greater));
+            result.addAll(quickSort(greater));
             return result;
         }
     }
+
+//    public static List<Integer> quickSort(List<Integer> arr) {
+//        if (arr.size() < 2) return arr;
+//
+//        else {
+//            int pivot = arr.getFirst();
+//            List<Integer> rest = arr.subList(1, arr.size());
+//
+//            List<Integer> less = rest
+//                    .stream()
+//                    .filter(i -> i <= pivot)
+//                    .toList();
+//            List<Integer> greater = rest
+//                    .stream()
+//                    .filter(i -> i > pivot)
+//                    .toList();
+//
+////            List<Integer> less = new ArrayList<>();
+////            List<Integer> greater = new ArrayList<>();
+////
+////            for (int i : rest) {
+////                if (i <= pivot) less.add(i);
+////                else greater.add(i);
+////            }
+//
+//            List<Integer> result = new ArrayList<>(quickSort(less));
+//            result.add(pivot);
+//            result.addAll(quickSort(greater));
+//            return result;
+//        }
+//    }
 }
