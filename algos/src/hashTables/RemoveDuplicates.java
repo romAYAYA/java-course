@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main {
+public class RemoveDuplicates {
     void main() {
         int[] arr = {1, 2, 2, 3, 4, 4, 5, 1};
         IO.println(removeDuplicates(arr));
