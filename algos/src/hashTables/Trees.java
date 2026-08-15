@@ -1,8 +1,9 @@
 package hashTables;
 
+import java.io.File;
 import java.util.*;
 
-public class BreadthFirstSearch {
+public class Trees {
     void main() {
         List<String> friends = new ArrayList<>(List.of("Alice", "Bob", "John"));
         Map<String, List<String>> graph = new HashMap<>(Map.of("me", friends));
@@ -19,6 +20,8 @@ public class BreadthFirstSearch {
         graph.put("Swan", List.of());
         graph.put("Man", List.of());
         System.out.println(searchQueue(graph));
+
+        printDirTree("algos");
     }
 
     public static String searchQueue(Map<String, List<String>> graph) {
@@ -41,5 +44,42 @@ public class BreadthFirstSearch {
 
     public static boolean isSeller(String person) {
         return person.toLowerCase().endsWith("m");
+    }
+
+    public static void printDirTree(String root) {
+        Deque<String> queue = new ArrayDeque<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            String currDir = queue.removeFirst();
+            File dir = new File(currDir);
+            File[] files = dir.listFiles();
+
+            if (files != null) {
+                Arrays.sort(files);
+                for (File file : files) {
+                    if (file.isFile()) {
+                        System.out.println(file.getPath());
+                    } else {
+                        queue.addLast(file.getPath());
+                    }
+                }
+            }
+        }
+    }
+
+    public static void printDirTreeRecursive(String root) {
+        File dir = new File(root);
+        File[] files = dir.listFiles();
+        if (files != null) {
+            Arrays.sort(files);
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println(file.getPath());
+                } else {
+                    printDirTreeRecursive(file.getPath());
+                }
+            }
+        }
     }
 }
